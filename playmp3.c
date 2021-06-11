@@ -84,9 +84,12 @@ int main(int argc, char * argv[]) {
 	fprintf(stderr, "Frame size is %d, file data is at 0x%x\n", frame_size, file_data);
 
 	while ((bytes_left >= 0) && (frame_size > 0)) {
+		size_t w = 0;
+		while (w < info.audio_bytes) {
+			w += write(spkr, (const void *)( (char *)sample_buf + w), info.audio_bytes - w);
+		}
 		stream_pos += frame_size;
 		bytes_left -= frame_size;
-		write(spkr, (const void *) sample_buf, info.audio_bytes);
 		frame_size = mp3_decode(mp3, stream_pos, bytes_left, sample_buf, NULL);
 	}
 
