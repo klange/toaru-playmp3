@@ -1,3 +1,5 @@
 *.so
 playmp3
 *.mp3
+install
+playmp3.tgz
